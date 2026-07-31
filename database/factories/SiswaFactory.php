@@ -2,24 +2,36 @@
 
 namespace Database\Factories;
 
+use App\Models\Perusahaan;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 
 class SiswaFactory extends Factory
 {
     public function definition(): array
     {
-        $tanggalMulai = fake()->dateTimeBetween('-3 months', 'now');
-
         return [
-            'nis' => fake()->unique()->numerify('#########'),
-            'nama' => fake()->name(),
-            'class'=> fake()->randomElement([
+            'nis' => $this->faker->unique()->numerify('#########'),
+
+            'nama' => $this->faker->name(),
+
+            'kelas' => $this->faker->randomElement([
                 'XI RPL 1',
                 'XI RPL 2',
                 'XI TKJ 1',
             ]),
-            'tanggal_mulai_pkl
-        ]
+
+            'tanggal_mulai_pkl' => $this->faker->dateTimeBetween(
+                '-3 months',
+                'now'
+            ),
+
+            'tanggal_selesai_pkl' => $this->faker->dateTimeBetween(
+                'now',
+                '+3 months'
+            ),
+
+            'perusahaan_id' => Perusahaan::inRandomOrder()->first()->id
+                ?? Perusahaan::factory(),
+        ];
     }
 }
