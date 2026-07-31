@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perusahaan extends Model
 {
-    use HasFactory;
+ use HasFactory;
+
+ protected $fillable = [
+ 'nama_perusahaan', 'bidang_usaha', 'alamat',
+ 'nama_pembimbing_industri', 'telepon',
+ ];
+ public function siswa()
+ {
+    return $this->hasMany(siswa::class);
+ }
 }
+

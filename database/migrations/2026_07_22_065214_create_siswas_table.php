@@ -10,8 +10,14 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kelas');
+            $table->string('nis', 20)->unique();
+            $table->string('nama', 100);
+            $table->string('kelas', 30);
+            $table->date('tanggal_mulai_pkl');
+            $table->date('tanggal_selesai_pkl');
+            $table->foreignId('perusahaan_id')
+                  ->constrained('perusahaans')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
