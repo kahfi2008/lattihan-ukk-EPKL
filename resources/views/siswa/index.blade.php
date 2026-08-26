@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Perusahaan')
+@section('title', 'Daftar Siswa')
 
 @section('content')
 
-<h1>Daftar Perusahaan</h1>
+<h1>Daftar Siswa</h1>
 
-<a href="{{ route('perusahaan.create') }}">
-    + Tambah Perusahaan
-</a>
+<a href="{{ route('siswa.create') }}">+ Tambah Siswa</a>
 
 <br><br>
 
@@ -17,50 +15,46 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Perusahaan</th>
-            <th>Bidang Usaha</th>
-            <th>Alamat</th>
+            <th>NIS</th>
+            <th>Nama</th>
+            <th>Kelas</th>
+            <th>Jurusan</th>
             <th>No. Telepon</th>
-            <th>Jumlah Siswa</th>
+            <th>Mulai PKL</th>
+            <th>Selesai PKL</th>
             <th>Aksi</th>
         </tr>
     </thead>
 
     <tbody>
 
-        @forelse ($perusahaan as $p)
+        @forelse ($siswa as $s)
 
         <tr>
             <td>{{ $loop->iteration }}</td>
-
-            <td>{{ $p->nama_perusahaan }}</td>
-
-            <td>{{ $p->bidang_usaha }}</td>
-
-            <td>{{ $p->alamat }}</td>
-
-            <td>{{ $p->no_telepon }}</td>
-
-            <td>{{ $p->jumlah_siswa }}</td>
+            <td>{{ $s->nis }}</td>
+            <td>{{ $s->nama }}</td>
+            <td>{{ $s->kelas }}</td>
+            <td>{{ $s->jurusan }}</td>
+            <td>{{ $s->no_telepon }}</td>
+            <td>{{ $s->tanggal_mulai_pkl }}</td>
+            <td>{{ $s->tanggal_selesai_pkl }}</td>
 
             <td>
 
-                {{-- DETAIL --}}
-                <a href="{{ route('perusahaan.show', $p->id) }}">
+                <a href="{{ route('siswa.show', $s->id) }}">
                     Detail
                 </a>
 
                 |
 
-                {{-- EDIT --}}
-                <a href="{{ route('perusahaan.edit', $p->id) }}">
+                <a href="{{ route('siswa.edit', $s->id) }}">
                     Edit
                 </a>
 
                 |
 
-                {{-- HAPUS --}}
-                <form action="{{ route('perusahaan.destroy', $p->id) }}"
+                <form action="{{ route('siswa.destroy', $s->id) }}"
                       method="POST"
                       style="display:inline">
 
@@ -80,8 +74,8 @@
         @empty
 
         <tr>
-            <td colspan="7">
-                Belum ada data perusahaan.
+            <td colspan="9">
+                Belum ada data siswa.
             </td>
         </tr>
 

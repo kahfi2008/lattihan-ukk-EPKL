@@ -6,24 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
     {
-        Schema::create('siswas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nis', 20)->unique();
-            $table->string('nama', 100);
-            $table->string('kelas', 30);
-            $table->date('tanggal_mulai_pkl');
-            $table->date('tanggal_selesai_pkl');
-            $table->foreignId('perusahaan_id')
-                  ->constrained('perusahaans')
-                  ->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('siswas', function (Blueprint $table) {
+            $table->string('jurusan')->nullable();
+            $table->string('no_telepon')->nullable();
         });
     }
 
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('siswas');
+        Schema::table('siswas', function (Blueprint $table) {
+            $table->dropColumn(['jurusan', 'no_telepon']);
+        });
     }
 };
