@@ -6,32 +6,31 @@
 
 <h1>Daftar Siswa</h1>
 
-<a href="{{ route('siswa.create') }}">+ Tambah Siswa</a>
+<p>
+    <a href="{{ route('siswa.create') }}"
+       style="background: #3498db; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none;">
+        + Tambah Siswa
+    </a>
+</p>
 
-<br><br>
-
-<table border="1" cellpadding="10">
-
+<table border="1" cellpadding="8" cellspacing="0">
     <thead>
         <tr>
-            <th>No</th>
             <th>NIS</th>
             <th>Nama</th>
             <th>Kelas</th>
             <th>Jurusan</th>
             <th>No. Telepon</th>
-            <th>Mulai PKL</th>
-            <th>Selesai PKL</th>
+            <th>Tanggal Mulai PKL</th>
+            <th>Tanggal Selesai PKL</th>
+            <th>Perusahaan</th>
             <th>Aksi</th>
         </tr>
     </thead>
 
     <tbody>
-
-        @forelse ($siswa as $s)
-
+        @foreach ($siswa as $s)
         <tr>
-            <td>{{ $loop->iteration }}</td>
             <td>{{ $s->nis }}</td>
             <td>{{ $s->nama }}</td>
             <td>{{ $s->kelas }}</td>
@@ -39,25 +38,20 @@
             <td>{{ $s->no_telepon }}</td>
             <td>{{ $s->tanggal_mulai_pkl }}</td>
             <td>{{ $s->tanggal_selesai_pkl }}</td>
+            <td>{{ $s->perusahaan->nama_perusahaan ?? '-' }}</td>
 
             <td>
-
                 <a href="{{ route('siswa.show', $s->id) }}">
                     Detail
                 </a>
-
-                |
 
                 <a href="{{ route('siswa.edit', $s->id) }}">
                     Edit
                 </a>
 
-                |
-
                 <form action="{{ route('siswa.destroy', $s->id) }}"
                       method="POST"
-                      style="display:inline">
-
+                      style="display:inline;">
                     @csrf
                     @method('DELETE')
 
@@ -65,24 +59,11 @@
                             onclick="return confirm('Yakin ingin menghapus data ini?')">
                         Hapus
                     </button>
-
                 </form>
-
             </td>
         </tr>
-
-        @empty
-
-        <tr>
-            <td colspan="9">
-                Belum ada data siswa.
-            </td>
-        </tr>
-
-        @endforelse
-
+        @endforeach
     </tbody>
-
 </table>
 
 @endsection

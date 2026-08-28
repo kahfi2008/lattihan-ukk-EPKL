@@ -6,7 +6,8 @@
 
 <h1>Daftar Perusahaan</h1>
 
-<a href="{{ route('perusahaan.create') }}">
+<a href="{{ route('perusahaan.create') }}"
+   style="background: #3498db; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none;">
     + Tambah Perusahaan
 </a>
 

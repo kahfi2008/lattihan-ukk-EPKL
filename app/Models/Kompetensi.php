@@ -8,6 +8,7 @@ class Kompetensi extends Model
 {
     protected $fillable = [
         'nama_kompetensi',
-        'deskripsi'
+        'deskripsi',
+        'jumlah_siswa'
     ];
 }

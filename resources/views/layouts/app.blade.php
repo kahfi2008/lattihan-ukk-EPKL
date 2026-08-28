@@ -100,6 +100,7 @@
 
     <nav>
         <h2>Sistem Informasi E-PKL</h2>
+       <a href="{{ route('home') }}">Beranda</a>
 
         <a href="{{ route('kompetensi.index') }}">Kompetensi</a>
         <a href="{{ route('siswa.index') }}">Siswa</a>

@@ -1,75 +1,61 @@
 @extends('layouts.app')
 
-@section('title', 'Kompetensi')
+@section('title', 'Daftar Kompetensi')
 
 @section('content')
 
 <h1>Daftar Kompetensi</h1>
 
-<a href="{{ route('kompetensi.create') }}">
-    + Tambah Kompetensi
-</a>
+<p>
+    <a href="{{ route('kompetensi.create') }}"
+       style="background: #3498db; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none;">
+        + Tambah Kompetensi
+    </a>
+</p>
 
-<br><br>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Kompetensi</th>
+            <th>Deskripsi</th>
+            <th>Jumlah Siswa</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
 
-<table border="1" cellpadding="10">
+    <tbody>
+        @foreach ($kompetensis as $kompetensi)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $kompetensi->nama_kompetensi }}</td>
+            <td>{{ $kompetensi->deskripsi }}</td>
+            <td>{{ $kompetensi->jumlah_siswa }}</td>
 
-    <tr>
-        <th>No</th>
-        <th>Nama Kompetensi</th>
-        <th>Deskripsi</th>
-        <th>Aksi</th>
-    </tr>
+            <td>
+                <a href="{{ route('kompetensi.show', $kompetensi->id) }}">
+                    Detail
+                </a>
 
-    @forelse ($kompetensi as $index => $k)
+                <a href="{{ route('kompetensi.edit', $kompetensi->id) }}">
+                    Edit
+                </a>
 
-    <tr>
-        <td>{{ $index + 1 }}</td>
+                <form action="{{ route('kompetensi.destroy', $kompetensi->id) }}"
+                      method="POST"
+                      style="display:inline;">
+                    @csrf
+                    @method('DELETE')
 
-        <td>
-            {{ $k->nama_kompetensi }}
-        </td>
-
-        <td>
-            {{ $k->deskripsi }}
-        </td>
-
-        <td>
-
-            <a href="{{ route('kompetensi.show', $k->id) }}">
-                Detail
-            </a>
-
-            <a href="{{ route('kompetensi.edit', $k->id) }}">
-                Edit
-            </a>
-
-            <form action="{{ route('kompetensi.destroy', $k->id) }}"
-                  method="POST"
-                  style="display:inline">
-
-                @csrf
-                @method('DELETE')
-
-                <button type="submit">
-                    Hapus
-                </button>
-
-            </form>
-
-        </td>
-    </tr>
-
-    @empty
-
-    <tr>
-        <td colspan="4">
-            Belum ada data kompetensi.
-        </td>
-    </tr>
-
-    @endforelse
-
+                    <button type="submit"
+                            onclick="return confirm('Yakin ingin menghapus data ini?')">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 </table>
 
 @endsection

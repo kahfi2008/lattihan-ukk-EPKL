@@ -4,59 +4,117 @@
 
 @section('content')
 
-<h1>Edit Data Siswa</h1>
+<div style="max-width: 800px; margin: 30px auto;">
 
-<form action="{{ route('siswa.update', $siswa->id) }}" method="POST">
+    <h1>Edit Siswa</h1>
 
-    @csrf
-    @method('PUT')
+    <div style="
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    ">
 
-    <p>
-        <label>NIS</label><br>
-        <input type="text" name="nis"
-               value="{{ $siswa->nis }}" required>
-    </p>
+        <form action="{{ route('siswa.update', $siswa->id) }}" method="POST">
 
-    <p>
-        <label>Nama</label><br>
-        <input type="text" name="nama"
-               value="{{ $siswa->nama }}" required>
-    </p>
+            @csrf
+            @method('PUT')
 
-    <p>
-        <label>Kelas</label><br>
-        <input type="text" name="kelas"
-               value="{{ $siswa->kelas }}" required>
-    </p>
+            <label>NIS</label>
+            <input type="text"
+                   name="nis"
+                   value="{{ $siswa->nis }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <p>
-        <label>Jurusan</label><br>
-        <input type="text" name="jurusan"
-               value="{{ $siswa->jurusan }}" required>
-    </p>
+            <label>Nama</label>
+            <input type="text"
+                   name="nama"
+                   value="{{ $siswa->nama }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <p>
-        <label>No. Telepon</label><br>
-        <input type="text" name="no_telepon"
-               value="{{ $siswa->no_telepon }}" required>
-    </p>
+            <label>Kelas</label>
+            <input type="text"
+                   name="kelas"
+                   value="{{ $siswa->kelas }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <p>
-        <label>Tanggal Mulai PKL</label><br>
-        <input type="date" name="tanggal_mulai_pkl"
-               value="{{ $siswa->tanggal_mulai_pkl }}" required>
-    </p>
+            <label>Jurusan</label>
+            <input type="text"
+                   name="jurusan"
+                   value="{{ $siswa->jurusan }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <p>
-        <label>Tanggal Selesai PKL</label><br>
-        <input type="date" name="tanggal_selesai_pkl"
-               value="{{ $siswa->tanggal_selesai_pkl }}" required>
-    </p>
+            <label>No. Telepon</label>
+            <input type="text"
+                   name="no_telepon"
+                   value="{{ $siswa->no_telepon }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <button type="submit">Update</button>
+            <label>Tanggal Mulai PKL</label>
+            <input type="date"
+                   name="tanggal_mulai_pkl"
+                   value="{{ $siswa->tanggal_mulai_pkl }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-    <a href="{{ route('siswa.index') }}">Kembali</a>
+            <label>Tanggal Selesai PKL</label>
+            <input type="date"
+                   name="tanggal_selesai_pkl"
+                   value="{{ $siswa->tanggal_selesai_pkl }}"
+                   required
+                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-</form>
+            <label>Perusahaan</label>
+            <select name="perusahaan_id"
+                    required
+                    style="width:100%; padding:10px; margin:5px 0 20px; box-sizing:border-box;">
+
+                <option value="">-- Pilih Perusahaan --</option>
+
+                @foreach($perusahaan as $p)
+
+                    <option value="{{ $p->id }}"
+                        {{ $siswa->perusahaan_id == $p->id ? 'selected' : '' }}>
+                        {{ $p->nama_perusahaan }}
+                    </option>
+
+                @endforeach
+
+            </select>
+
+            <button type="submit"
+                    style="
+                        background:#3498db;
+                        color:white;
+                        border:none;
+                        padding:10px 20px;
+                        border-radius:5px;
+                        cursor:pointer;
+                    ">
+                Simpan Perubahan
+            </button>
+
+            <a href="{{ route('siswa.index') }}"
+               style="
+                   background:#6c757d;
+                   color:white;
+                   padding:10px 20px;
+                   border-radius:5px;
+                   text-decoration:none;
+                   margin-left:5px;
+               ">
+                Kembali
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
 
 @endsection
