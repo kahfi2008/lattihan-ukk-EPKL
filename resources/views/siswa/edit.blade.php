@@ -1,115 +1,357 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Siswa')
-
 @section('content')
 
-<div style="max-width: 800px; margin: 30px auto;">
-
-    <h1>Edit Siswa</h1>
+<div class="container" style="max-width: 800px; margin: 0 auto;">
 
     <div style="
         background: white;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     ">
+
+        <div style="margin-bottom: 25px;">
+
+            <h2 style="
+                margin: 0;
+                font-size: 24px;
+                color: #222;
+            ">
+                Edit Siswa
+            </h2>
+
+            <p style="
+                margin: 8px 0 0;
+                color: #777;
+                font-size: 14px;
+            ">
+                Perbarui data siswa.
+            </p>
+
+        </div>
+
 
         <form action="{{ route('siswa.update', $siswa->id) }}" method="POST">
 
             @csrf
             @method('PUT')
 
-            <label>NIS</label>
-            <input type="text"
-                   name="nis"
-                   value="{{ $siswa->nis }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
 
-            <label>Nama</label>
-            <input type="text"
-                   name="nama"
-                   value="{{ $siswa->nama }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
+            {{-- NIS --}}
+            <div style="margin-bottom: 18px;">
 
-            <label>Kelas</label>
-            <input type="text"
-                   name="kelas"
-                   value="{{ $siswa->kelas }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
+                <label for="nis" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    NIS
+                </label>
 
-            <label>Jurusan</label>
-            <input type="text"
-                   name="jurusan"
-                   value="{{ $siswa->jurusan }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
-
-            <label>No. Telepon</label>
-            <input type="text"
-                   name="no_telepon"
-                   value="{{ $siswa->no_telepon }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
-
-            <label>Tanggal Mulai PKL</label>
-            <input type="date"
-                   name="tanggal_mulai_pkl"
-                   value="{{ $siswa->tanggal_mulai_pkl }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
-
-            <label>Tanggal Selesai PKL</label>
-            <input type="date"
-                   name="tanggal_selesai_pkl"
-                   value="{{ $siswa->tanggal_selesai_pkl }}"
-                   required
-                   style="width:100%; padding:10px; margin:5px 0 15px; box-sizing:border-box;">
-
-            <label>Perusahaan</label>
-            <select name="perusahaan_id"
+                <input
+                    type="text"
+                    id="nis"
+                    name="nis"
+                    value="{{ old('nis', $siswa->nis) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
                     required
-                    style="width:100%; padding:10px; margin:5px 0 20px; box-sizing:border-box;">
+                >
 
-                <option value="">-- Pilih Perusahaan --</option>
+                @error('nis')
+                    <small style="color: #dc2626;">
+                        {{ $message }}
+                    </small>
+                @enderror
 
-                @foreach($perusahaan as $p)
+            </div>
 
-                    <option value="{{ $p->id }}"
-                        {{ $siswa->perusahaan_id == $p->id ? 'selected' : '' }}>
-                        {{ $p->nama_perusahaan }}
-                    </option>
+
+            {{-- Nama --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="nama" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Nama
+                </label>
+
+                <input
+                    type="text"
+                    id="nama"
+                    name="nama"
+                    value="{{ old('nama', $siswa->nama) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
+                    required
+                >
+
+            </div>
+
+
+            {{-- Kelas --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="kelas" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Kelas
+                </label>
+
+                <input
+                    type="text"
+                    id="kelas"
+                    name="kelas"
+                    value="{{ old('kelas', $siswa->kelas) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
+                    required
+                >
+
+            </div>
+
+
+            {{-- Jurusan --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="jurusan" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Jurusan
+                </label>
+
+                <input
+                    type="text"
+                    id="jurusan"
+                    name="jurusan"
+                    value="{{ old('jurusan', $siswa->jurusan) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
+                    required
+                >
+
+            </div>
+
+
+            {{-- Perusahaan --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="perusahaan_id" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Perusahaan
+                </label>
+
+                <select
+                    id="perusahaan_id"
+                    name="perusahaan_id"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        background: white;
+                    "
+                    required
+                >
+
+                    @foreach($perusahaan as $item)
+
+                        <option
+                            value="{{ $item->id }}"
+                            {{ old('perusahaan_id', $siswa->perusahaan_id) == $item->id ? 'selected' : '' }}
+                        >
+                            {{ $item->nama_perusahaan }}
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+
+            {{-- Tanggal Mulai PKL --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="tanggal_mulai_pkl" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Tanggal Mulai PKL
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggal_mulai_pkl"
+                    name="tanggal_mulai_pkl"
+                    value="{{ old('tanggal_mulai_pkl', $siswa->tanggal_mulai_pkl) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
+                    required
+                >
+
+            </div>
+
+
+            {{-- Tanggal Selesai PKL --}}
+            <div style="margin-bottom: 18px;">
+
+                <label for="tanggal_selesai_pkl" style="
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Tanggal Selesai PKL
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggal_selesai_pkl"
+                    name="tanggal_selesai_pkl"
+                    value="{{ old('tanggal_selesai_pkl', $siswa->tanggal_selesai_pkl) }}"
+                    style="
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 11px 14px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        font-size: 14px;
+                    "
+                    required
+                >
+
+            </div>
+
+
+            {{-- Kompetensi --}}
+            <div style="margin-bottom: 25px;">
+
+                <label style="
+                    display: block;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    color: #333;
+                ">
+                    Kompetensi
+                </label>
+
+                @foreach($kompetensi as $item)
+
+                    <div style="margin-bottom: 8px;">
+
+                        <label style="
+                            font-weight: normal;
+                            color: #333;
+                        ">
+
+                            <input
+                                type="checkbox"
+                                name="kompetensi[]"
+                                value="{{ $item->id }}"
+                                {{ $siswa->kompetensi->contains($item->id) ? 'checked' : '' }}
+                            >
+
+                            {{ $item->nama_kompetensi }}
+
+                        </label>
+
+                    </div>
 
                 @endforeach
 
-            </select>
+            </div>
 
-            <button type="submit"
+
+            {{-- Tombol --}}
+            <div style="
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            ">
+
+                <a
+                    href="{{ route('siswa.index') }}"
                     style="
-                        background:#3498db;
-                        color:white;
-                        border:none;
-                        padding:10px 20px;
-                        border-radius:5px;
-                        cursor:pointer;
-                    ">
-                Simpan Perubahan
-            </button>
+                        display: inline-block;
+                        padding: 10px 18px;
+                        background: #f3f4f6;
+                        color: #374151;
+                        text-decoration: none;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 600;
+                    "
+                >
+                    Kembali
+                </a>
 
-            <a href="{{ route('siswa.index') }}"
-               style="
-                   background:#6c757d;
-                   color:white;
-                   padding:10px 20px;
-                   border-radius:5px;
-                   text-decoration:none;
-                   margin-left:5px;
-               ">
-                Kembali
-            </a>
+                <button
+                    type="submit"
+                    style="
+                        padding: 10px 20px;
+                        background: #2563eb;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    "
+                >
+                    Update
+                </button>
+
+            </div>
 
         </form>
 

@@ -1,63 +1,135 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Perusahaan')
-
 @section('content')
+<div class="container" style="max-width: 800px; margin: 0 auto;">
 
-<h1>Edit Perusahaan</h1>
+    <div style="
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
 
-<form action="{{ route('perusahaan.update', $perusahaan->id) }}"
-      method="POST">
+        <div style="margin-bottom:25px;">
+            <h2 style="margin:0; font-size:24px; color:#222;">
+                Edit Perusahaan
+            </h2>
 
-    @csrf
-    @method('PUT')
+            <p style="margin:8px 0 0; color:#777; font-size:14px;">
+                Perbarui data perusahaan.
+            </p>
+        </div>
 
-    <label>Nama Perusahaan</label>
-    <br>
-    <input type="text"
-           name="nama_perusahaan"
-           value="{{ $perusahaan->nama_perusahaan }}">
+        <form action="{{ route('perusahaan.update', $perusahaan->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-    <br><br>
+            {{-- Nama Perusahaan --}}
+            <div style="margin-bottom:18px;">
+                <label for="nama_perusahaan" style="display:block; margin-bottom:8px; font-weight:600;">
+                    Nama Perusahaan
+                </label>
 
-    <label>Bidang Usaha</label>
-    <br>
-    <input type="text"
-           name="bidang_usaha"
-           value="{{ $perusahaan->bidang_usaha }}">
+                <input type="text"
+                    id="nama_perusahaan"
+                    name="nama_perusahaan"
+                    value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan) }}"
+                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
+                    required>
+            </div>
 
-    <br><br>
+            {{-- Bidang Usaha --}}
+            <div style="margin-bottom:18px;">
+                <label for="bidang_usaha" style="display:block; margin-bottom:8px; font-weight:600;">
+                    Bidang Usaha
+                </label>
 
-    <label>Alamat</label>
-    <br>
-    <textarea name="alamat">{{ $perusahaan->alamat }}</textarea>
+                <input type="text"
+                    id="bidang_usaha"
+                    name="bidang_usaha"
+                    value="{{ old('bidang_usaha', $perusahaan->bidang_usaha) }}"
+                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
+                    required>
+            </div>
 
-    <br><br>
+            {{-- Alamat --}}
+            <div style="margin-bottom:18px;">
+                <label for="alamat" style="display:block; margin-bottom:8px; font-weight:600;">
+                    Alamat
+                </label>
 
-    <label>No. Telepon</label>
-    <br>
-    <input type="text"
-           name="no_telepon"
-           value="{{ $perusahaan->no_telepon }}">
+                <textarea
+                    id="alamat"
+                    name="alamat"
+                    rows="4"
+                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; resize:vertical;"
+                    required>{{ old('alamat', $perusahaan->alamat) }}</textarea>
+            </div>
 
-    <br><br>
+            {{-- No Telepon --}}
+            <div style="margin-bottom:18px;">
+                <label for="no_telepon" style="display:block; margin-bottom:8px; font-weight:600;">
+                    No. Telepon
+                </label>
 
-    <label>Jumlah Siswa</label>
-    <br>
-    <input type="number"
-           name="jumlah_siswa"
-           value="{{ $perusahaan->jumlah_siswa }}">
+                <input type="text"
+                    id="no_telepon"
+                    name="no_telepon"
+                    value="{{ old('no_telepon', $perusahaan->no_telepon) }}"
+                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
+                    required>
+            </div>
 
-    <br><br>
+            {{-- Jumlah Siswa --}}
+            <div style="margin-bottom:25px;">
+                <label for="jumlah_siswa" style="display:block; margin-bottom:8px; font-weight:600;">
+                    Jumlah Siswa
+                </label>
 
-    <button type="submit">
-        Update
-    </button>
+                <input type="number"
+                    id="jumlah_siswa"
+                    name="jumlah_siswa"
+                    value="{{ old('jumlah_siswa', $perusahaan->jumlah_siswa) }}"
+                    min="0"
+                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
+                    required>
+            </div>
 
-    <a href="{{ route('perusahaan.index') }}">
-        Kembali
-    </a>
+            {{-- Tombol --}}
+            <div style="display:flex; gap:10px;">
 
-</form>
+                <a href="{{ route('perusahaan.index') }}"
+                    style="
+                        display:inline-block;
+                        padding:10px 18px;
+                        background:#f3f4f6;
+                        color:#374151;
+                        text-decoration:none;
+                        border-radius:8px;
+                        font-size:14px;
+                        font-weight:600;
+                    ">
+                    Kembali
+                </a>
 
+                <button type="submit"
+                    style="
+                        padding:10px 20px;
+                        background:#2563eb;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        font-size:14px;
+                        font-weight:600;
+                        cursor:pointer;
+                    ">
+                    Update
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>
 @endsection

@@ -4,119 +4,81 @@
 
 @section('content')
 
-<div style="max-width: 800px; margin: 30px auto;">
+<div class="container">
 
     <h1>Detail Siswa</h1>
 
-    <div style="
-        background: white;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    ">
+    <table border="1" cellpadding="10" cellspacing="0">
 
-        <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>NIS</th>
+            <td>{{ $siswa->nis }}</td>
+        </tr>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    NIS
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->nis }}
-                </td>
-            </tr>
+        <tr>
+            <th>Nama</th>
+            <td>{{ $siswa->nama }}</td>
+        </tr>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Nama
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->nama }}
-                </td>
-            </tr>
+        <tr>
+            <th>Kelas</th>
+            <td>{{ $siswa->kelas }}</td>
+        </tr>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Kelas
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->kelas }}
-                </td>
-            </tr>
+        <tr>
+            <th>Jurusan</th>
+            <td>{{ $siswa->jurusan }}</td>
+        </tr>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Jurusan
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->jurusan }}
-                </td>
-            </tr>
+        <tr>
+            <th>Perusahaan</th>
+            <td>
+                {{ $siswa->perusahaan->nama_perusahaan ?? '-' }}
+            </td>
+        </tr>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    No. Telepon
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->no_telepon }}
-                </td>
-            </tr>
+        <tr>
+            <th>Kompetensi</th>
+            <td>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Tanggal Mulai PKL
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->tanggal_mulai_pkl }}
-                </td>
-            </tr>
+                @forelse($siswa->kompetensi as $item)
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Tanggal Selesai PKL
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->tanggal_selesai_pkl }}
-                </td>
-            </tr>
+                    <div>
+                        {{ $item->nama_kompetensi }}
+                    </div>
 
-            <tr>
-                <th style="text-align: left; padding: 12px;">
-                    Perusahaan
-                </th>
-                <td style="padding: 12px;">
-                    {{ $siswa->perusahaan->nama_perusahaan ?? '-' }}
-                </td>
-            </tr>
+                @empty
 
-        </table>
+                    -
 
-        <br>
+                @endforelse
 
-        <a href="{{ route('siswa.edit', $siswa->id) }}"
-           style="
-               background: #f39c12;
-               color: white;
-               padding: 10px 15px;
-               border-radius: 5px;
-               text-decoration: none;
-           ">
-            Edit
-        </a>
+            </td>
+        </tr>
 
-        <a href="{{ route('siswa.index') }}"
-           style="
-               background: #6c757d;
-               color: white;
-               padding: 10px 15px;
-               border-radius: 5px;
-               text-decoration: none;
-               margin-left: 5px;
-           ">
-            Kembali
-        </a>
+        <tr>
+            <th>Tanggal Mulai</th>
+            <td>{{ $siswa->tanggal_mulai }}</td>
+        </tr>
 
-    </div>
+        <tr>
+            <th>Tanggal Selesai</th>
+            <td>{{ $siswa->tanggal_selesai }}</td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <a href="{{ route('siswa.index') }}">
+        Kembali
+    </a>
+
+    |
+
+    <a href="{{ route('siswa.edit', $siswa->id) }}">
+        Edit
+    </a>
 
 </div>
 

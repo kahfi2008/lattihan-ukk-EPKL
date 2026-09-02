@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Perusahaan;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Siswa extends Model
 {
+    use HasFactory;
+
     protected $table = 'siswas';
 
     protected $fillable = [
@@ -15,14 +18,26 @@ class Siswa extends Model
         'nama',
         'kelas',
         'jurusan',
-        'no_telepon',
+        'perusahaan_id',
         'tanggal_mulai_pkl',
         'tanggal_selesai_pkl',
-        'perusahaan_id',
     ];
 
-    public function perusahaan()
+    public function perusahaan(): BelongsTo
     {
-        return $this->belongsTo(Perusahaan::class);
+        return $this->belongsTo(
+            Perusahaan::class,
+            'perusahaan_id'
+        );
+    }
+
+    public function kompetensi(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Kompetensi::class,
+            'siswa_kompetensi',
+            'siswa_id',
+            'kompetensi_id'
+        );
     }
 }

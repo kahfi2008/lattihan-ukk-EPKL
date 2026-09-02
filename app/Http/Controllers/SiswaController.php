@@ -4,24 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\Perusahaan;
+use App\Models\Kompetensi;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
+    /**
+     * Menampilkan semua data siswa.
+     */
     public function index()
     {
-        $siswa = Siswa::with('perusahaan')->get();
+        $siswa = Siswa::with([
+            'perusahaan',
+            'kompetensi'
+        ])->latest()->get();
 
         return view('siswa.index', compact('siswa'));
     }
 
+    /**
+     * Menampilkan form tambah siswa.
+     */
     public function create()
     {
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::latest()->get();
+        $kompetensi = Kompetensi::latest()->get();
 
-        return view('siswa.create', compact('perusahaan'));
+        return view('siswa.create', compact(
+            'perusahaan',
+            'kompetensi'
+        ));
     }
 
+    /**
+     * Menyimpan data siswa baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -29,54 +46,73 @@ class SiswaController extends Controller
             'nama' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
-            'no_telepon' => 'required',
+            'perusahaan_id' => 'required',
             'tanggal_mulai_pkl' => 'required|date',
             'tanggal_selesai_pkl' => 'required|date',
-            'perusahaan_id' => 'required'
         ]);
 
-        Siswa::create([
+        $siswa = Siswa::create([
             'nis' => $request->nis,
             'nama' => $request->nama,
             'kelas' => $request->kelas,
             'jurusan' => $request->jurusan,
-            'no_telepon' => $request->no_telepon,
+            'perusahaan_id' => $request->perusahaan_id,
             'tanggal_mulai_pkl' => $request->tanggal_mulai_pkl,
             'tanggal_selesai_pkl' => $request->tanggal_selesai_pkl,
-            'perusahaan_id' => $request->perusahaan_id
         ]);
 
-        return redirect()->route('siswa.index');
+        $siswa->kompetensi()->sync(
+            $request->kompetensi ?? []
+        );
+
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
-    public function show($id)
+    /**
+     * Menampilkan detail siswa.
+     */
+    public function show(Siswa $siswa)
     {
-        $siswa = Siswa::with('perusahaan')->findOrFail($id);
+        $siswa->load([
+            'perusahaan',
+            'kompetensi'
+        ]);
 
         return view('siswa.show', compact('siswa'));
     }
 
-    public function edit($id)
+    /**
+     * Menampilkan form edit siswa.
+     */
+    public function edit(Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::latest()->get();
+        $kompetensi = Kompetensi::latest()->get();
 
-        return view('siswa.edit', compact('siswa', 'perusahaan'));
+        $siswa->load('kompetensi');
+
+        return view('siswa.edit', compact(
+            'siswa',
+            'perusahaan',
+            'kompetensi'
+        ));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Mengupdate data siswa.
+     */
+    public function update(Request $request, Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
-
         $request->validate([
             'nis' => 'required',
             'nama' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
-            'no_telepon' => 'required',
+            'perusahaan_id' => 'required',
             'tanggal_mulai_pkl' => 'required|date',
             'tanggal_selesai_pkl' => 'required|date',
-            'perusahaan_id' => 'required'
         ]);
 
         $siswa->update([
@@ -84,21 +120,31 @@ class SiswaController extends Controller
             'nama' => $request->nama,
             'kelas' => $request->kelas,
             'jurusan' => $request->jurusan,
-            'no_telepon' => $request->no_telepon,
+            'perusahaan_id' => $request->perusahaan_id,
             'tanggal_mulai_pkl' => $request->tanggal_mulai_pkl,
             'tanggal_selesai_pkl' => $request->tanggal_selesai_pkl,
-            'perusahaan_id' => $request->perusahaan_id
         ]);
 
-        return redirect()->route('siswa.index');
+        $siswa->kompetensi()->sync(
+            $request->kompetensi ?? []
+        );
+
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    /**
+     * Menghapus data siswa.
+     */
+    public function destroy(Siswa $siswa)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa->kompetensi()->detach();
 
         $siswa->delete();
 
-        return redirect()->route('siswa.index');
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil dihapus.');
     }
 }
