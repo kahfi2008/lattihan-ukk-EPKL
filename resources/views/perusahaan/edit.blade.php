@@ -1,135 +1,256 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="max-width: 800px; margin: 0 auto;">
+
+<div style="
+    max-width: 800px;
+    margin: auto;
+">
 
     <div style="
-        background:white;
-        padding:30px;
-        border-radius:12px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     ">
 
-        <div style="margin-bottom:25px;">
-            <h2 style="margin:0; font-size:24px; color:#222;">
-                Edit Perusahaan
-            </h2>
+        <h2 style="
+            margin-top: 0;
+            color: #111827;
+        ">
+            Edit Perusahaan
+        </h2>
 
-            <p style="margin:8px 0 0; color:#777; font-size:14px;">
-                Perbarui data perusahaan.
-            </p>
-        </div>
+        <p style="
+            color: #6b7280;
+            margin-bottom: 25px;
+        ">
+            Ubah data perusahaan.
+        </p>
 
-        <form action="{{ route('perusahaan.update', $perusahaan->id) }}" method="POST">
+
+        {{-- Error --}}
+        @if($errors->any())
+
+            <div style="
+                background: #fee2e2;
+                color: #991b1b;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            ">
+
+                <ul style="margin: 0; padding-left: 20px;">
+
+                    @foreach($errors->all() as $error)
+
+                        <li>{{ $error }}</li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+        @endif
+
+
+        <form action="{{ route('perusahaan.update', $perusahaan->id) }}"
+              method="POST">
+
             @csrf
+
             @method('PUT')
 
+
             {{-- Nama Perusahaan --}}
-            <div style="margin-bottom:18px;">
-                <label for="nama_perusahaan" style="display:block; margin-bottom:8px; font-weight:600;">
+            <div style="margin-bottom: 18px;">
+
+                <label>
                     Nama Perusahaan
                 </label>
 
-                <input type="text"
-                    id="nama_perusahaan"
+                <input
+                    type="text"
                     name="nama_perusahaan"
                     value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan) }}"
-                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
-                    required>
+                    required
+                    style="
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 7px;
+                        box-sizing: border-box;
+                    "
+                >
+
             </div>
 
+
             {{-- Bidang Usaha --}}
-            <div style="margin-bottom:18px;">
-                <label for="bidang_usaha" style="display:block; margin-bottom:8px; font-weight:600;">
+            <div style="margin-bottom: 18px;">
+
+                <label>
                     Bidang Usaha
                 </label>
 
-                <input type="text"
-                    id="bidang_usaha"
+                <input
+                    type="text"
                     name="bidang_usaha"
                     value="{{ old('bidang_usaha', $perusahaan->bidang_usaha) }}"
-                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
-                    required>
+                    required
+                    style="
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 7px;
+                        box-sizing: border-box;
+                    "
+                >
+
             </div>
 
+
             {{-- Alamat --}}
-            <div style="margin-bottom:18px;">
-                <label for="alamat" style="display:block; margin-bottom:8px; font-weight:600;">
+            <div style="margin-bottom: 18px;">
+
+                <label>
                     Alamat
                 </label>
 
                 <textarea
-                    id="alamat"
                     name="alamat"
-                    rows="4"
-                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; resize:vertical;"
-                    required>{{ old('alamat', $perusahaan->alamat) }}</textarea>
+                    required
+                    rows="3"
+                    style="
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 7px;
+                        box-sizing: border-box;
+                    "
+                >{{ old('alamat', $perusahaan->alamat) }}</textarea>
+
             </div>
 
+
+
+              {{-- Pembimbing --}}
+            <div style="margin-bottom: 18px;">
+
+                <label>
+                    Pembimbing
+                </label>
+
+                <textarea
+                    name="pembimbing"
+                    required
+                    rows="3"
+                    style="
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 7px;
+                        box-sizing: border-box;
+                    "
+                >{{ old('pembimbing', $perusahaan->pembimbing) }}</textarea>
+
+            </div>
+
+
+
             {{-- No Telepon --}}
-            <div style="margin-bottom:18px;">
-                <label for="no_telepon" style="display:block; margin-bottom:8px; font-weight:600;">
+            <div style="margin-bottom: 25px;">
+
+                <label>
                     No. Telepon
                 </label>
 
-                <input type="text"
-                    id="no_telepon"
+                <input
+                    type="text"
                     name="no_telepon"
                     value="{{ old('no_telepon', $perusahaan->no_telepon) }}"
-                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
-                    required>
+                    required
+                    style="
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 6px;
+                        border: 1px solid #d1d5db;
+                        border-radius: 7px;
+                        box-sizing: border-box;
+                    "
+                >
+
             </div>
 
-            {{-- Jumlah Siswa --}}
-            <div style="margin-bottom:25px;">
-                <label for="jumlah_siswa" style="display:block; margin-bottom:8px; font-weight:600;">
-                    Jumlah Siswa
-                </label>
 
-                <input type="number"
-                    id="jumlah_siswa"
-                    name="jumlah_siswa"
-                    value="{{ old('jumlah_siswa', $perusahaan->jumlah_siswa) }}"
-                    min="0"
-                    style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid #d1d5db; border-radius:8px; font-size:14px;"
-                    required>
+            {{-- Info --}}
+            <div style="
+                background: #eff6ff;
+                color: #1e40af;
+                padding: 12px 15px;
+                border-radius: 8px;
+                margin-bottom: 25px;
+            ">
+
+                <strong>Jumlah siswa:</strong>
+
+                {{ $perusahaan->siswas()->count() }}
+
+                siswa
+
+                <br>
+
+                <small>
+                    Jumlah siswa dihitung otomatis dari data siswa.
+                </small>
+
             </div>
+
 
             {{-- Tombol --}}
-            <div style="display:flex; gap:10px;">
+            <div>
 
-                <a href="{{ route('perusahaan.index') }}"
+                <button
+                    type="submit"
                     style="
-                        display:inline-block;
-                        padding:10px 18px;
-                        background:#f3f4f6;
-                        color:#374151;
-                        text-decoration:none;
-                        border-radius:8px;
-                        font-size:14px;
-                        font-weight:600;
-                    ">
-                    Kembali
-                </a>
-
-                <button type="submit"
-                    style="
-                        padding:10px 20px;
-                        background:#2563eb;
-                        color:white;
-                        border:none;
-                        border-radius:8px;
-                        font-size:14px;
-                        font-weight:600;
-                        cursor:pointer;
-                    ">
+                        background: #16a34a;
+                        color: white;
+                        border: none;
+                        padding: 10px 18px;
+                        border-radius: 7px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    "
+                >
                     Update
                 </button>
+
+
+                <a
+                    href="{{ route('perusahaan.index') }}"
+                    style="
+                        background: #6b7280;
+                        color: white;
+                        padding: 10px 18px;
+                        border-radius: 7px;
+                        text-decoration: none;
+                        margin-left: 5px;
+                    "
+                >
+                    Kembali
+                </a>
 
             </div>
 
         </form>
+
     </div>
 
 </div>
+
 @endsection

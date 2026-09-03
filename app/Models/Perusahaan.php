@@ -13,6 +13,7 @@ class Perusahaan extends Model
         'nama_perusahaan',
         'bidang_usaha',
         'alamat',
+        'pembimbing',
         'no_telepon',
         'jumlah_siswa',
     ];

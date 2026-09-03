@@ -21,6 +21,12 @@
     {{ $perusahaan->alamat }}
 </p>
 
+
+
+<p>
+    <strong>Pembimbing:</strong>
+    {{ $perusahaan->pembimbing }}
+</p>
 <p>
     <strong>No. Telepon:</strong>
     {{ $perusahaan->no_telepon }}

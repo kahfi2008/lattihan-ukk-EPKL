@@ -8,17 +8,19 @@ use Illuminate\Http\Request;
 class PerusahaanController extends Controller
 {
     /**
-     * Menampilkan semua perusahaan.
+     * Menampilkan daftar perusahaan
      */
     public function index()
     {
-        $perusahaan = Perusahaan::latest()->get();
+        $perusahaan = Perusahaan::withCount('siswas')
+            ->latest()
+            ->get();
 
         return view('perusahaan.index', compact('perusahaan'));
     }
 
     /**
-     * Menampilkan form tambah perusahaan.
+     * Menampilkan form tambah perusahaan
      */
     public function create()
     {
@@ -26,7 +28,7 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Menyimpan perusahaan baru.
+     * Menyimpan perusahaan baru
      */
     public function store(Request $request)
     {
@@ -34,16 +36,19 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => 'required',
             'bidang_usaha' => 'required',
             'alamat' => 'required',
+            'pembimbing' => 'required',
             'no_telepon' => 'required',
-            'jumlah_siswa' => 'required|integer|min:0',
         ]);
 
         Perusahaan::create([
             'nama_perusahaan' => $request->nama_perusahaan,
             'bidang_usaha' => $request->bidang_usaha,
             'alamat' => $request->alamat,
+            'pembimbing' => $request->pembimbing,
             'no_telepon' => $request->no_telepon,
-            'jumlah_siswa' => $request->jumlah_siswa,
+
+            // Jumlah siswa dihitung otomatis
+            'jumlah_siswa' => 0,
         ]);
 
         return redirect()
@@ -52,7 +57,7 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Menampilkan detail perusahaan.
+     * Menampilkan detail perusahaan
      */
     public function show(Perusahaan $perusahaan)
     {
@@ -62,7 +67,7 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Menampilkan form edit perusahaan.
+     * Menampilkan form edit perusahaan
      */
     public function edit(Perusahaan $perusahaan)
     {
@@ -70,7 +75,7 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Mengupdate data perusahaan.
+     * Mengupdate perusahaan
      */
     public function update(Request $request, Perusahaan $perusahaan)
     {
@@ -78,16 +83,18 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => 'required',
             'bidang_usaha' => 'required',
             'alamat' => 'required',
+            'pembimbing' => 'required',
             'no_telepon' => 'required',
-            'jumlah_siswa' => 'required|integer|min:0',
         ]);
 
         $perusahaan->update([
             'nama_perusahaan' => $request->nama_perusahaan,
             'bidang_usaha' => $request->bidang_usaha,
             'alamat' => $request->alamat,
+            'pembimbing' => $request->pembimbing,
             'no_telepon' => $request->no_telepon,
-            'jumlah_siswa' => $request->jumlah_siswa,
+
+            // Jumlah siswa tetap dihitung otomatis
         ]);
 
         return redirect()
@@ -96,7 +103,7 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Menghapus perusahaan.
+     * Menghapus perusahaan
      */
     public function destroy(Perusahaan $perusahaan)
     {
